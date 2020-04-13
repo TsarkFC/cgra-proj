@@ -67,11 +67,6 @@ class MyCylinder extends CGFobject {
             this.normals.push(...normal);
             this.normals.push(...normal);
 
-
-
-            
-            
-
             ang+=alphaAng;
         }
 
@@ -87,7 +82,6 @@ class MyCylinder extends CGFobject {
                 this.indices.push(this.slices * 2 + 2 + i , this.slices * 2 + 1 + i , this.slices * 2 + 2);
             }
         }
-        //this.indices.push(this.slices * 2 + 4, this.slices * 2 + 3, this.slices * 2 + 2);
         this.vertices.push(1, -0.5, 0);
 
         ang = 0;
@@ -99,11 +93,12 @@ class MyCylinder extends CGFobject {
             this.vertices.push(ca, 0.5, -sa);
             ang += alphaAng;
             if(i >= 2){
-            this.indices.push(this.slices * 3 + 3, this.slices * 3 + 2 + i, this.slices * 3 + 3 + i);
+                this.indices.push(this.slices * 3 + 3, this.slices * 3 + 2 + i, this.slices * 3 + 3 + i);
             }
         }
         ang = 0;
         this.vertices.push(1, 0.5, 0);
+
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }

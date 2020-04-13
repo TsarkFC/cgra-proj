@@ -33,9 +33,19 @@ class MyScene extends CGFscene {
         this.testMaterial.loadTexture(this.texture1);
         this.testMaterial.setTextureWrap('REPEAT', 'REPEAT');
 */
+
+        //------ Earth Texture Material
+        this.earth = new CGFappearance(this);
+        this.earth.setAmbient(0.1, 0.1, 0.1, 1);
+        this.earth.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.earth.setSpecular(0.1, 0.1, 0.1, 1);
+        this.earth.setShininess(10.0);
+        this.earth.loadTexture('images/earth.jpg');
+        this.earth.setTextureWrap('REPEAT', 'REPEAT');
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8);
+        this.Sphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 16, 8);
 
         //Objects connected to MyInterface
@@ -94,8 +104,8 @@ class MyScene extends CGFscene {
             this.cylinder.display();
         }
         else{
-            //This sphere does not have defined texture coordinates
-            this.incompleteSphere.display();
+            this.earth.apply();
+            this.Sphere.display();
         }
 
         this.setDefaultAppearance();
