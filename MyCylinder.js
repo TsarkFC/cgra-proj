@@ -1,8 +1,8 @@
 /**
-* MyPyramid
+* MyCylinder
 * @constructor
 */
-class MyPyramid extends CGFobject {
+class MyCylinder extends CGFobject {
     constructor(scene, slices, stacks) {
         super(scene);
         this.slices = slices;
@@ -83,10 +83,13 @@ class MyPyramid extends CGFobject {
 
             this.vertices.push(ca, -0.5, -sa);
             ang += alphaAng;
-            this.indices.push(this.slices * 2 + 2 + i , this.slices * 2 + 1 + i ,this.slices * 2 + 2);
+            if(i >= 2){
+                this.indices.push(this.slices * 2 + 2 + i , this.slices * 2 + 1 + i , this.slices * 2 + 2);
+            }
         }
-        //this.indices.push(this.slices * 2 + 2 + i , this.slices * 2 + 1 + i ,this.slices * 2 + 2);
+        //this.indices.push(this.slices * 2 + 4, this.slices * 2 + 3, this.slices * 2 + 2);
         this.vertices.push(1, -0.5, 0);
+
         ang = 0;
         for(var i = 0; i < this.slices; i++){
             
@@ -95,12 +98,12 @@ class MyPyramid extends CGFobject {
 
             this.vertices.push(ca, 0.5, -sa);
             ang += alphaAng;
-            this.indices.push(this.slices * 3 + 3, this.slices * 3 +2 + i, this.slices * 3 + 3 + i);
+            if(i >= 2){
+            this.indices.push(this.slices * 3 + 3, this.slices * 3 + 2 + i, this.slices * 3 + 3 + i);
+            }
         }
         ang = 0;
         this.vertices.push(1, 0.5, 0);
-        //this.indices.push(this.slices *2 + 4, this.slices * 2 + 3, this.slices * 2 + 2);
-
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }

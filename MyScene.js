@@ -22,7 +22,7 @@ class MyScene extends CGFscene {
         this.setUpdatePeriod(50);
         
         this.enableTextures(true);
-
+/*
         this.texture1 = new CGFtexture(this, 'images/temp.png');
         //Test material
         this.testMaterial = new CGFappearance(this); 
@@ -32,16 +32,16 @@ class MyScene extends CGFscene {
         this.testMaterial.setShininess(10.0);
         this.testMaterial.loadTexture(this.texture1);
         this.testMaterial.setTextureWrap('REPEAT', 'REPEAT');
-
+*/
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
-        this.pyramid = new MyPyramid(this, 16, 8);
+        this.cylinder = new MyCylinder(this, 16, 8);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
 
-        this.showpyramidonly = true;
+        this.showcylinderonly = true;
 
     }
     initLights() {
@@ -59,11 +59,11 @@ class MyScene extends CGFscene {
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
     }
-
+/*
     //Function that resets selected texture in quadMaterial
     updateAppliedTexture() {
         this.testMaterial.setTexture(this.texture1);
-    }
+    }*/
 
 
     // called periodically (as per setUpdatePeriod() in init())
@@ -82,16 +82,16 @@ class MyScene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
         
-        this.pyramid.enableNormalViz();
+        this.cylinder.enableNormalViz();
 
 
         
-        this.testMaterial.apply();
+        //this.testMaterial.apply();
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
-        if(this.showpyramidonly){
-            this.pyramid.display();
+        if(this.showcylinderonly){
+            this.cylinder.display();
         }
         else{
             //This sphere does not have defined texture coordinates
