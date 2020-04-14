@@ -44,9 +44,9 @@ class MyScene extends CGFscene {
 
         //------ Cubemap Texture Material
         this.cubemap = new CGFappearance(this);
-        this.cubemap.setAmbient(0.8, 0.8, 0.8, 1);
-        this.cubemap.setDiffuse(0.0, 0.0, 0.0, 1);
-        this.cubemap.setSpecular(0.0, 0.0, 0.0, 1);
+        this.cubemap.setAmbient(1, 1, 1, 1);
+        this.cubemap.setDiffuse(0.1, 0.1, 0.1, 1);
+        this.cubemap.setSpecular(0.6, 0.6, 0.6, 1);
         this.cubemap.setShininess(10.0);
         this.cubemap.loadTexture('images/cubemap.png');
         this.cubemap.setTextureWrap('REPEAT', 'REPEAT');
@@ -55,7 +55,7 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.Sphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 16, 8);
-        this.scenario = new MyUnitCube(this, 5);
+        this.scenario = new MyUnitCube(this, 1);
         this.vehicle = new MyVehicle(this, 4, 1);
 
         //Objects connected to MyInterface
@@ -102,8 +102,7 @@ class MyScene extends CGFscene {
 
         this.cubemap.apply();
         this.scenario.display();
-        
-        //this.testMaterial.apply();
+    
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
@@ -129,12 +128,12 @@ class MyScene extends CGFscene {
         var keysPressed=false;
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyW")) {
-            this.vehicle.accerlerate(0.5);
+            this.vehicle.accerlerate(0.1);
             text+=" W ";
             keysPressed=true;
         }
         if (this.gui.isKeyPressed("KeyS")) {
-            this.vehicle.accerlerate(-0.5);
+            this.vehicle.accerlerate(-0.1);
             text+=" S ";
             keysPressed=true;
         }

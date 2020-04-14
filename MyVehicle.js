@@ -87,8 +87,8 @@ class MyVehicle extends CGFobject {
     }
 
     update(){
-        this.x = this.v * Math.sin(this.angle);
-        this.z = this.v * Math.cos(this.angle);
+        this.x += this.v * Math.sin(this.angle);
+        this.z += this.v * Math.cos(this.angle);
     }
     turn(val){
         this.angle += val;
