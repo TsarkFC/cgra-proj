@@ -22,17 +22,16 @@ class MyScene extends CGFscene {
         this.setUpdatePeriod(50);
         
         this.enableTextures(true);
-/*
-        this.texture1 = new CGFtexture(this, 'images/temp.png');
-        //Test material
+
+        //------ Cylinder material
         this.testMaterial = new CGFappearance(this); 
         this.testMaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.testMaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.testMaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.testMaterial.setShininess(10.0);
-        this.testMaterial.loadTexture(this.texture1);
+        this.testMaterial.loadTexture('images/temp.png');
         this.testMaterial.setTextureWrap('REPEAT', 'REPEAT');
-*/
+
 
         //------ Earth Texture Material
         this.earth = new CGFappearance(this);
@@ -43,10 +42,20 @@ class MyScene extends CGFscene {
         this.earth.loadTexture('images/earth.jpg');
         this.earth.setTextureWrap('REPEAT', 'REPEAT');
 
+        //------ Cubemap Texture Material
+        this.cubemap = new CGFappearance(this);
+        this.cubemap.setAmbient(0.8, 0.8, 0.8, 1);
+        this.cubemap.setDiffuse(0.0, 0.0, 0.0, 1);
+        this.cubemap.setSpecular(0.0, 0.0, 0.0, 1);
+        this.cubemap.setShininess(10.0);
+        this.cubemap.loadTexture('images/cubemap.png');
+        this.cubemap.setTextureWrap('REPEAT', 'REPEAT');
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.Sphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 16, 8);
+        this.scenario = new MyUnitCube(this, 5);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -94,13 +103,15 @@ class MyScene extends CGFscene {
         
         this.cylinder.enableNormalViz();
 
-
+        this.cubemap.apply();
+        this.scenario.display();
         
         //this.testMaterial.apply();
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
         if(this.showcylinderonly){
+            this.testMaterial.apply();
             this.cylinder.display();
         }
         else{
