@@ -25,13 +25,13 @@ class MyScene extends CGFscene {
 
         //------ Texture stuff
         this.texture1 = new CGFtexture(this, 'images/cubemap.png');
-        this.texture2 = new CGFtexture(this, 'images/Grass_cubemap.png');
-        this.texture3 = new CGFtexture(this, 'images/Space_cubemap.png');
-        this.texture4 = new CGFtexture(this, 'images/Beach_cubemap.png');
+        this.texture2 = new CGFtexture(this, 'images/Ground_cubemap.png');
+        this.texture3 = new CGFtexture(this, 'images/Canyon_cubemap.jpg');
+        this.texture4 = new CGFtexture(this, 'images/Car_cubemap.jpg');
 
         this.cubemapTex = 0;
         this.textures = [this.texture1, this.texture2, this.texture3, this.texture4];
-        this.textureIds = { 'Default': 0, 'Grass': 1, 'Space': 2, 'Beach': 3};
+        this.textureIds = { 'Default': 0, 'Ground': 1, 'Canyon': 2, 'Car': 3};
         //------
         
         //------ Cylinder material
@@ -60,13 +60,13 @@ class MyScene extends CGFscene {
         this.cubemap.setSpecular(0.6, 0.6, 0.6, 1);
         this.cubemap.setShininess(10.0);
         this.cubemap.loadTexture('images/cubemap.png');
-        this.cubemap.setTextureWrap('REPEAT', 'REPEAT');
+        this.cubemap.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.Sphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 16, 8);
-        this.scenario = new MyUnitCube(this, 1);
+        this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 4, 1);
 
         //Objects connected to MyInterface
@@ -121,6 +121,7 @@ class MyScene extends CGFscene {
         this.cylinder.enableNormalViz();
 
         this.cubemap.apply();
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
         this.scenario.display();
     
         // Draw axis
