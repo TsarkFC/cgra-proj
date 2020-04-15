@@ -21,7 +21,12 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayVehicle').name('Display Vehicle');
         this.gui.add(this.scene, 'showcylinderonly').name('Cylinder');
         this.gui.add(this.scene, 'showsphereonly').name('Sphere');
+        //The cubemap's texture
         this.gui.add(this.scene, 'cubemapTex', this.scene.textureIds).name('Cubemap texture').onChange(this.scene.updateAppliedTexture.bind(this.scene));
+        //Vehicle stuff
+        this.gui.add(this.scene, 'vehicleSpeed', 0.1, 5).name('Vehicle Speed');
+        this.gui.add(this.scene, 'vehicleScale', 0.5, 3).name('Vehicle Scale');
+
         this.initKeys();
         return true;
     }

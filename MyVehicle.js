@@ -12,6 +12,7 @@ class MyVehicle extends CGFobject {
         this.x = 0;
         this.y = 0;
         this.z = 0;
+        this.scale = 1.0;
 
         this.initBuffers();
     }
@@ -70,11 +71,14 @@ class MyVehicle extends CGFobject {
 
     display(){
         this.scene.pushMatrix();
+        this.scene.scale(this.scale, this.scale, this.scale);
+        this.scene.pushMatrix();
         this.scene.translate(this.x, this.y, this.z);
         this.scene.rotate(this.angle, 0, 1, 0);
         this.scene.translate(0,0,-0.5);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
         super.display();
+        this.scene.popMatrix();
         this.scene.popMatrix();
     }
     
@@ -86,9 +90,10 @@ class MyVehicle extends CGFobject {
         this.initNormalVizBuffers();
     }
 
-    update(){
-        this.x += this.v * Math.sin(this.angle);
-        this.z += this.v * Math.cos(this.angle);
+    update(speed, scale){
+        this.x += this.v * Math.sin(this.angle) * speed;
+        this.z += this.v * Math.cos(this.angle) * speed;
+        this.scale = scale;
     }
     turn(val){
         this.angle += val;

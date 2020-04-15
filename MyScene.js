@@ -75,6 +75,10 @@ class MyScene extends CGFscene {
         this.showcylinderonly = true;
         this.showsphereonly = false;
 
+
+        //Vehicle stuff
+        this.vehicleSpeed = 1.0;
+        this.vehicleScale = 1.0;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -95,7 +99,7 @@ class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         this.checkKeys();
-        this.vehicle.update();
+        this.vehicle.update(this.vehicleSpeed, this.vehicleScale);
     }
 
     updateAppliedTexture() {
@@ -124,7 +128,6 @@ class MyScene extends CGFscene {
             this.axis.display();
         if (this.displayVehicle)
             this.vehicle.display();
-
         if(this.showcylinderonly){
             this.testMaterial.apply();
             this.cylinder.display();
