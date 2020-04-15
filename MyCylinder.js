@@ -10,9 +10,9 @@ class MyCylinder extends CGFobject {
         this.stacks = stacks;
         this.initBuffers();
     }
-
+/*
     initMaterials(scene){
-
+        
         //------ Side material 
         this.testMaterial = new CGFappearance(this); 
         this.testMaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -42,7 +42,8 @@ class MyCylinder extends CGFobject {
         this.topMaterial.loadTexture('images/temp3.png');
         this.topMaterial.setTextureWrap('REPEAT', 'REPEAT')
         //------
-    }
+        
+    }*/
 
     initBuffers() {
 
@@ -109,7 +110,7 @@ class MyCylinder extends CGFobject {
             ang+=alphaAng;
         }
 
-        
+        /*
         //this.bottomMaterial.apply();
         ang = 0;
         for(var i = 0; i < this.slices; i++){
@@ -144,7 +145,7 @@ class MyCylinder extends CGFobject {
             ang += alphaAng;
         }
         ang = 0;
-        this.vertices.push(1, 0.5, 0);
+        this.vertices.push(1, 0.5, 0);*/
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();

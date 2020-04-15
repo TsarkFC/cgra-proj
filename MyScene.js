@@ -23,6 +23,17 @@ class MyScene extends CGFscene {
         
         this.enableTextures(true);
 
+        //------ Texture stuff
+        this.texture1 = new CGFtexture(this, 'images/cubemap.png');
+        this.texture2 = new CGFtexture(this, 'images/Grass_cubemap.png');
+        this.texture3 = new CGFtexture(this, 'images/Space_cubemap.png');
+        this.texture4 = new CGFtexture(this, 'images/Beach_cubemap.png');
+
+        this.cubemapTex = 0;
+        this.textures = [this.texture1, this.texture2, this.texture3, this.texture4];
+        this.textureIds = { 'Default': 0, 'Grass': 1, 'Space': 2, 'Beach': 3};
+        //------
+        
         //------ Cylinder material
         this.testMaterial = new CGFappearance(this); 
         this.testMaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -86,6 +97,11 @@ class MyScene extends CGFscene {
         this.checkKeys();
         this.vehicle.update();
     }
+
+    updateAppliedTexture() {
+        this.cubemap.setTexture(this.textures[this.cubemapTex]);
+    }
+
 
     display() {
         // ---- BEGIN Background, camera and axis setup
