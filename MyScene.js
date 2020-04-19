@@ -67,12 +67,12 @@ class MyScene extends CGFscene {
         this.Sphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 16, 8);
         this.scenario = new MyUnitCube(this);
-        this.vehicle = new MyVehicle(this, 4, 1);
+        this.vehicle = new MyVehicle(this, 16, 8);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
-        this.displayVehicle = false;
-        this.showcylinderonly = true;
+        this.displayVehicle = true;
+        this.showcylinderonly = false;
         this.showsphereonly = false;
 
 
@@ -127,12 +127,26 @@ class MyScene extends CGFscene {
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
-        if (this.displayVehicle)
+
+        if (this.displayVehicle){
+            this.pushMatrix();
+            this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
+            this.scale(this.vehicle.scale, this.vehicle.scale, this.vehicle.scale);
+            this.translate(-this.vehicle.x, -this.vehicle.y, -this.vehicle.z);
+            this.pushMatrix();
+            this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
+            this.rotate(this.vehicle.angle, 0, 1, 0);
+            //this.translate(0, 10, 0);
             this.vehicle.display();
+            this.popMatrix();
+            this.popMatrix();
+        }
+
         if(this.showcylinderonly){
             this.testMaterial.apply();
             this.cylinder.display();
         }
+
         if (this.showsphereonly){
             this.earth.apply();
             this.Sphere.display();
