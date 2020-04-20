@@ -27,7 +27,7 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'vehicleSpeed', 0.1, 5).name('Vehicle Speed');
         this.gui.add(this.scene, 'vehicleScale', 0.5, 3).name('Vehicle Scale');
 
-        this.initKeys();
+		this.initKeys();
         return true;
     }
 

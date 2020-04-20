@@ -7,6 +7,7 @@ class MyScene extends CGFscene {
         super();
     }
     init(application) {
+        //this.appearance = null;
         super.init(application);
         this.initCameras();
         this.initLights();
@@ -28,6 +29,8 @@ class MyScene extends CGFscene {
         this.texture2 = new CGFtexture(this, 'images/Forest_cubemap.png');
         this.texture3 = new CGFtexture(this, 'images/Sea_cubemap.png');
         this.texture4 = new CGFtexture(this, 'images/Grass_cubemap.png');
+        //this.terrainTex = new CGFtexture(this, 'images/terrain.jpg');
+        this.heightTex = new CGFtexture(this, 'images/heightmap.jpg');
 
         this.cubemapTex = 0;
         this.textures = [this.texture1, this.texture2, this.texture3, this.texture4];
@@ -59,7 +62,7 @@ class MyScene extends CGFscene {
         this.cubemap.setDiffuse(0.1, 0.1, 0.1, 1);
         this.cubemap.setSpecular(0.1, 0.1, 0.1, 1);
         this.cubemap.setShininess(100.0);
-        this.cubemap.loadTexture('images/Water_cubemap.png');
+        this.cubemap.setTexture(this.texture1);
         this.cubemap.setTextureWrap('REPEAT', 'REPEAT');
 
         //Initialize scene objects
@@ -69,6 +72,26 @@ class MyScene extends CGFscene {
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
 
+        this.terrain = new MyTerrain(this, 20);
+
+        // Materials and textures initialization
+
+		this.appearance = new CGFappearance(this);
+		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
+		this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
+		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.appearance.setShininess(120);
+
+		
+		this.appearance.loadTexture('images/terrain.jpg');
+		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+
+        //Shader stuff
+		this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
+        this.terrainShader.setUniformsValues({uSampler2: 1});
+
+        
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayVehicle = true;
@@ -95,7 +118,6 @@ class MyScene extends CGFscene {
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
     }
-
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         this.checkKeys();
@@ -151,6 +173,19 @@ class MyScene extends CGFscene {
             this.earth.apply();
             this.Sphere.display();
         }
+        // aplly main appearance (including texture in default texture unit 0)
+        this.appearance.apply();
+
+        // bind additional texture to texture unit 1
+        this.heightTex.bind(1);
+        this.setActiveShader(this.terrainShader);
+        this.pushMatrix();
+        this.scale(25, 25, 25);
+        this.rotate(-Math.PI / 2, 1, 0, 0);
+        this.terrain.display();
+        this.popMatrix();
+        // restore default shader (will be needed for drawing the axis in next frame)
+		this.setActiveShader(this.defaultShader);
 
         this.setDefaultAppearance();
 
