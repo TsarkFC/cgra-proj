@@ -110,7 +110,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 25, 30), vec3.fromValues(0, 5, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -158,7 +158,7 @@ class MyScene extends CGFscene {
             this.pushMatrix();
             this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
             this.rotate(this.vehicle.angle, 0, 1, 0);
-            //this.translate(0, 10, 0);
+            this.translate(0, 10, 0);
             this.vehicle.display();
             this.popMatrix();
             this.popMatrix();
@@ -180,7 +180,7 @@ class MyScene extends CGFscene {
         this.heightTex.bind(1);
         this.setActiveShader(this.terrainShader);
         this.pushMatrix();
-        this.scale(25, 25, 25);
+        this.scale(50, 50, 50);
         this.rotate(-Math.PI / 2, 1, 0, 0);
         this.terrain.display();
         this.popMatrix();

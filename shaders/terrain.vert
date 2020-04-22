@@ -26,7 +26,7 @@ void main() {
 	//vTextureCoord.x -= mod(timeFactor * 0.01, 1.0);
 	vec4 filterer = texture2D(uSampler2, mod(vTextureCoord, 1.0));
 	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition , 1.0);
-	gl_Position.y += (filterer.y - 0.5)* 20.0; //*  normScale; //Esta linha parece estar bem
+	gl_Position.y += filterer.y * 8.0;
 }
 
 
