@@ -180,7 +180,7 @@ class MyScene extends CGFscene {
         this.heightTex.bind(1);
         this.setActiveShader(this.terrainShader);
         this.pushMatrix();
-        this.scale(50, 50, 50);
+        this.scale(50, 8, 50);
         this.rotate(-Math.PI / 2, 1, 0, 0);
         this.terrain.display();
         this.popMatrix();
