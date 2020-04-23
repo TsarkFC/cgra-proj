@@ -5,8 +5,12 @@
 class MyScene extends CGFscene {
     constructor() {
         super();
+        this.max_num_supplies = 5;
     }
     init(application) {
+
+
+       
         //this.appearance = null;
         super.init(application);
         this.initCameras();
@@ -74,6 +78,11 @@ class MyScene extends CGFscene {
 
         this.terrain = new MyTerrain(this, 20);
 
+
+        this.supplies = [];
+        for(var i = 0; i < this.max_num_supplies; i++){
+            this.supplies.push(new MySupply(this, 1.0));
+        }
         // Materials and textures initialization
 
 		this.appearance = new CGFappearance(this);
@@ -122,6 +131,9 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.vehicle.update(this.vehicleSpeed, this.vehicleScale);
+        for(var i = 0; i < this.max_num_supplies; i++){
+            this.supplies[i].update(t);
+        }
     }
 
     updateAppliedTexture() {
@@ -188,7 +200,14 @@ class MyScene extends CGFscene {
 		this.setActiveShader(this.defaultShader);
 
         this.setDefaultAppearance();
-
+/*
+        for(var i = 0; i < this.max_num_supplies; i++){
+            this.pushMatrix();
+            this.translate(0, 5 + 5 * i, 0);
+            this.supplies[i].display();
+            this.popMatrix();
+        }*/
+        this.supplies[0].display();
         // ---- END Primitive drawing section
     }
 
@@ -220,7 +239,10 @@ class MyScene extends CGFscene {
             this.vehicle.reset();
             text+=" R ";
             keysPressed=true;
-        }
+        }/*
+        if(this.gui.isKeyPressed("KeyL")){
+
+        }*/
         if (keysPressed)
             console.log(text);
     }
