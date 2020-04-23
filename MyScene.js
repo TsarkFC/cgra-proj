@@ -192,6 +192,7 @@ class MyScene extends CGFscene {
         this.heightTex.bind(1);
         this.setActiveShader(this.terrainShader);
         this.pushMatrix();
+        this.translate(0, -2.15, 0);
         this.scale(50, 8, 50);
         this.rotate(-Math.PI / 2, 1, 0, 0);
         this.terrain.display();
@@ -200,14 +201,12 @@ class MyScene extends CGFscene {
 		this.setActiveShader(this.defaultShader);
 
         this.setDefaultAppearance();
-/*
+
         for(var i = 0; i < this.max_num_supplies; i++){
             this.pushMatrix();
-            this.translate(0, 5 + 5 * i, 0);
             this.supplies[i].display();
             this.popMatrix();
-        }*/
-        this.supplies[0].display();
+        }
         // ---- END Primitive drawing section
     }
 
@@ -239,10 +238,17 @@ class MyScene extends CGFscene {
             this.vehicle.reset();
             text+=" R ";
             keysPressed=true;
-        }/*
+        }
         if(this.gui.isKeyPressed("KeyL")){
-
-        }*/
+            for(var i = 0; i < this.max_num_supplies; i++){
+                if(this.supplies[i].state == SupplyStates.INACTIVE){
+                    this.supplies[i].drop(this.vehicle.x, this.vehicle.y + 10, this.vehicle.z);
+                    break;
+                }
+            }
+            text+=" L ";
+            keysPressed = true;
+        }
         if (keysPressed)
             console.log(text);
     }

@@ -14,12 +14,13 @@ class MySupply extends CGFobject {
     
         super(scene);   
         
-        this.state = SupplyStates.FALLING;
+        this.state = SupplyStates.INACTIVE;
         this.initMaterials(this.scene);
 
         this.squareSide = new MyQuad(this.scene);
         this.squareTop = new MyQuad(this.scene);
         this.squareBottom = new MyQuad(this.scene);
+        this.maxy = 15;
         this.y = 15;
         this.x = 0;
         this.z = 0;
@@ -166,10 +167,11 @@ class MySupply extends CGFobject {
 
     update(time){
         if(this.state == SupplyStates.FALLING){
-            if(this.y > 6.0){
-                this.y -= this.fall_speed / 10.0;
-                if(this.y < 6.0){
-                    this.y = 6.0;
+            if(this.y > 0.5){
+                this.y -= (this.maxy - 0.5) / 60.0;
+                console.log(this.y);
+                if(this.y < 0.5){
+                    this.y = 0.5;
                     this.state = SupplyStates.LANDED;
                 }
             }
@@ -178,8 +180,12 @@ class MySupply extends CGFobject {
 
     }
 
-    drop(){
+    drop(x, y, z){
         this.state = SupplyStates.FALLING;
+        this.x = x;
+        this.maxy = y;
+        this.y = y;
+        this.z = z;
         //Fazer set das coordenadas
     }
 
