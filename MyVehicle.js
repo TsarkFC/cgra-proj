@@ -7,7 +7,7 @@ class MyVehicle extends CGFobject {
         super(scene);
         this.slices = slices;
         this.stacks = stacks;
-        this.angle = 0; this.rudderAng = 0;
+        this.angle = 0; this.rudderAng = 0; this.engineAng = 0;
         this.v = 0;
         this.x = 0;
         this.y = 0;
@@ -65,15 +65,23 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0.2, -1.1, -0.68);
+        this.scene.translate(0.2, -1.145, -0.68);
+        this.scene.pushMatrix();
+        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
+        this.scene.translate(0, 0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
         this.scene.popMatrix();
+        this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0.2, -1.19, -0.68);
+        this.scene.translate(0.2, -1.145, -0.68);
+        this.scene.pushMatrix();
+        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
+        this.scene.translate(0, -0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
+        this.scene.popMatrix();
         this.scene.popMatrix();
 
         //2
@@ -90,15 +98,23 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.2, -1.1, -0.68);
+        this.scene.translate(-0.2, -1.145, -0.68);
+        this.scene.pushMatrix();
+        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
+        this.scene.translate(0, 0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
         this.scene.popMatrix();
+        this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-0.2, -1.19, -0.68);
+        this.scene.translate(-0.2, -1.145, -0.68);
+        this.scene.pushMatrix();
+        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
+        this.scene.translate(0, -0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
+        this.scene.popMatrix();
         this.scene.popMatrix();
         
         //---
@@ -152,6 +168,7 @@ class MyVehicle extends CGFobject {
     update(speed, scale){
         this.x += this.v * Math.sin(this.angle) * speed;
         this.z += this.v * Math.cos(this.angle) * speed;
+        this.engineAng += this.v * Math.PI/2;
         this.scale = scale;
     }
     turn(val){
