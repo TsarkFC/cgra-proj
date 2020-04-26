@@ -7,7 +7,7 @@ class MyVehicle extends CGFobject {
         super(scene);
         this.slices = slices;
         this.stacks = stacks;
-        this.angle = 0;
+        this.angle = 0; this.rudderAng = 0;
         this.v = 0;
         this.x = 0;
         this.y = 0;
@@ -121,6 +121,7 @@ class MyVehicle extends CGFobject {
 
         //Vertical
         this.scene.pushMatrix();
+        this.scene.rotate(this.rudderAng, 0, 1, 0);
         this.scene.rotate(Math.PI*0.5, 0, 0, 1);
         this.scene.translate(0.7, 0, -1.3);
         this.scene.scale(0.35, 1, 0.4);
@@ -130,6 +131,7 @@ class MyVehicle extends CGFobject {
 
         //Vertical
         this.scene.pushMatrix();
+        this.scene.rotate(this.rudderAng, 0, 1, 0);
         this.scene.rotate(Math.PI*1.5, 0, 0, 1);
         this.scene.translate(0.7, 0, -1.3);
         this.scene.scale(0.35, 1, 0.4);
@@ -154,6 +156,10 @@ class MyVehicle extends CGFobject {
     }
     turn(val){
         this.angle += val;
+        this.rudderAng = val>0 ? Math.PI/12 : -Math.PI/12;
+    }
+    resetturn(){
+        this.rudderAng = 0;
     }
     accerlerate(val){
         this.v += val;

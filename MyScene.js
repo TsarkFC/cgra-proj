@@ -60,6 +60,15 @@ class MyScene extends CGFscene {
         this.earth.loadTexture('images/earth.jpg');
         this.earth.setTextureWrap('REPEAT', 'REPEAT');
 
+        //------ Vehicle texture
+        this.vehicleTex = new CGFappearance(this);
+        this.vehicleTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.vehicleTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.vehicleTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.vehicleTex.setShininess(10.0);
+        this.vehicleTex.loadTexture('images/vehicle.jpg');
+        this.vehicleTex.setTextureWrap('REPEAT', 'REPEAT');
+
         //------ Cubemap Texture Material
         this.cubemap = new CGFappearance(this);
         this.cubemap.setAmbient(1, 1, 1, 1);
@@ -157,10 +166,11 @@ class MyScene extends CGFscene {
         this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
         this.scenario.display();
     
-        // Draw axis
+        //-------- Draw axis
         if (this.displayAxis)
             this.axis.display();
 
+        //-------- Display vehicle
         if (this.displayVehicle){
             this.pushMatrix();
             this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
@@ -170,16 +180,19 @@ class MyScene extends CGFscene {
             this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
             this.rotate(this.vehicle.angle, 0, 1, 0);
             this.translate(0, 10, 0);
+            this.vehicleTex.apply();
             this.vehicle.display();
             this.popMatrix();
             this.popMatrix();
         }
 
+        //------- Display cylinder
         if(this.showcylinderonly){
             this.testMaterial.apply();
             this.cylinder.display();
         }
 
+        //------- Display sphere
         if (this.showsphereonly){
             this.earth.apply();
             this.Sphere.display();
@@ -187,6 +200,7 @@ class MyScene extends CGFscene {
         // aplly main appearance (including texture in default texture unit 0)
         this.appearance.apply();
 
+        //------- Display terrain
         // bind additional texture to texture unit 1
         this.heightTex.bind(1);
         this.setActiveShader(this.terrainShader);
@@ -250,5 +264,7 @@ class MyScene extends CGFscene {
         }
         if (keysPressed)
             console.log(text);
+        else 
+            this.vehicle.resetturn();
     }
 }
