@@ -75,7 +75,6 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 16, 8);
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
-
         this.terrain = new MyTerrain(this, 20);
 
 
@@ -86,8 +85,8 @@ class MyScene extends CGFscene {
         // Materials and textures initialization
 
 		this.appearance = new CGFappearance(this);
-		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
-		this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
+		this.appearance.setAmbient(0.2, 0.4, 0.8, 1);
+		this.appearance.setDiffuse(0.2, 0.7, 0.7, 1);
 		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
 		this.appearance.setShininess(120);
 
@@ -122,7 +121,7 @@ class MyScene extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 25, 30), vec3.fromValues(0, 5, 0));
     }
     setDefaultAppearance() {
-        this.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.setGlobalAmbientLight(0.6, 0.6, 0.6, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
