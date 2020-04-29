@@ -16,7 +16,9 @@ class MyVehicle extends CGFobject {
 
         this.sphere = new MySphere(this.scene, this.slices, this.stacks);
         this.cylinder = new MyCylinder(this.scene, this.slices, this.stacks);
-        this.rudder = new MyRudder(this.scene);
+        this.rudders = new MyVehicleRudders(this.scene);
+        this.engine = new MyEngine(this.scene, this.slices, this.stacks);
+        this.gondola = new MyGondola(this.scene, this.slices, this.stacks);
 
         this.initBuffers();
     }
@@ -29,124 +31,17 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         //---
 
-        //---Gôndola
-        this.scene.pushMatrix();
-        this.scene.translate(0, -1.1, 0);
-        this.scene.scale(0.203, 0.203, 1);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.cylinder.display();
-        this.scene.popMatrix();
+        this.gondola.display();
+
+        this.engine.display(this.angle);
 
         this.scene.pushMatrix();
-        this.scene.translate(0, -1.1, 0.5);
-        this.scene.scale(0.2, 0.2, 0.2);
-        this.sphere.display();
-        this.scene.popMatrix();
+        this.scene.translate(-0.4, 0, 0);
+        this.engine.display(this.angle);
 
-        this.scene.pushMatrix();
-        this.scene.translate(0, -1.1, -0.5);
-        this.scene.scale(0.2, 0.2, 0.2);
-        this.sphere.display();
-        this.scene.popMatrix();
-        //---
-
-        //---Engines
-        //1
-        this.scene.pushMatrix();
-        this.scene.translate(0.2, -1.15, -0.5);
-        this.scene.scale(0.1, 0.1, 0.2);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(0.2, -1.15, -0.7);
-        this.scene.scale(0.04, 0.04, 0.04);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(0.2, -1.145, -0.68);
-        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
-        this.scene.translate(0, 0.045, 0);
-        this.scene.scale(0.04, 0.09, 0.01);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(0.2, -1.145, -0.68);
-        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
-        this.scene.translate(0, -0.045, 0);
-        this.scene.scale(0.04, 0.09, 0.01);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        //2
-        this.scene.pushMatrix();
-        this.scene.translate(-0.2, -1.15, -0.5);
-        this.scene.scale(0.1, 0.1, 0.2);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(-0.2, -1.15, -0.7);
-        this.scene.scale(0.04, 0.04, 0.04);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(-0.2, -1.145, -0.68);
-        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
-        this.scene.translate(0, 0.045, 0);
-        this.scene.scale(0.04, 0.09, 0.01);
-        this.sphere.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(-0.2, -1.145, -0.68);
-        this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
-        this.scene.translate(0, -0.045, 0);
-        this.scene.scale(0.04, 0.09, 0.01);
-        this.sphere.display();
         this.scene.popMatrix();
         
-        //---
-
-        //---Rudders
-        this.scene.pushMatrix();
-        this.scene.translate(0.7, 0, -1.3);
-        this.scene.scale(0.35, 1, 0.4);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.rudder.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 0, 0, 1);
-        this.scene.translate(0.7, 0, -1.3);
-        this.scene.scale(0.35, 1, 0.4);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.rudder.display();
-        this.scene.popMatrix();
-
-        //Vertical
-        this.scene.pushMatrix();
-        this.scene.rotate(this.rudderAng, 0, 1, 0);
-        this.scene.rotate(Math.PI*0.5, 0, 0, 1);
-        this.scene.translate(0.7, 0, -1.3);
-        this.scene.scale(0.35, 1, 0.4);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.rudder.display();
-        this.scene.popMatrix();
-
-        //Vertical
-        this.scene.pushMatrix();
-        this.scene.rotate(this.rudderAng, 0, 1, 0);
-        this.scene.rotate(Math.PI*1.5, 0, 0, 1);
-        this.scene.translate(0.7, 0, -1.3);
-        this.scene.scale(0.35, 1, 0.4);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.rudder.display();
-        this.scene.popMatrix();
-        //---
+        this.rudders.display();
 
     }
 
@@ -171,15 +66,15 @@ class MyVehicle extends CGFobject {
     update(speed, scale){
         this.x += this.v * Math.sin(this.angle) * speed;
         this.z += this.v * Math.cos(this.angle) * speed;
-        this.engineAng += this.v * Math.PI/2;
+        this.engine.update(this.v, speed);
         this.scale = scale;
     }
     turn(val){
         this.angle += val;
-        this.rudderAng = val>0 ? Math.PI/12 : -Math.PI/12;
+        this.rudders.update(val);
     }
     resetturn(){
-        this.rudderAng = 0;
+        this.rudders.resetturn();
     }
     accerlerate(val){
         this.v += val;

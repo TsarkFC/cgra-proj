@@ -29,9 +29,4 @@ class MyRudder extends CGFobject {
         this.quad.display();
         this.scene.popMatrix();
     }
-
-    // updateBuffers(){
-    //     this.triangle.updateBuffers();
-    //     this.quad.updateBuffers();
-    // }
 }
