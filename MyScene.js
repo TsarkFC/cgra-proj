@@ -78,6 +78,16 @@ class MyScene extends CGFscene {
         this.cubemap.setTexture(this.texture1);
         this.cubemap.setTextureWrap('REPEAT', 'REPEAT');
 
+        //------ Flag Texture Material
+        this.flagTex = new CGFappearance(this);
+        this.flagTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.flagTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.flagTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.flagTex.setShininess(10.0);
+        this.flagTex.loadTexture('images/temp.png');
+        this.flagTex.setTextureWrap('REPEAT', 'REPEAT');
+
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.Sphere = new MySphere(this, 16, 8);
@@ -85,6 +95,8 @@ class MyScene extends CGFscene {
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
         this.terrain = new MyTerrain(this, 20);
+
+        this.flag = new MyTerrain(this, 20);
 
 
         this.supplies = [];
@@ -111,7 +123,7 @@ class MyScene extends CGFscene {
 		this.flagAppearance.setShininess(120);
 
 		
-		this.flagAppearance.loadTexture('images/terrain.jpg');
+		this.flagAppearance.loadTexture('images/temp.png');
 		this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
 
         //Shader stuff
@@ -119,7 +131,7 @@ class MyScene extends CGFscene {
         this.terrainShader.setUniformsValues({uSampler2: 1});
 
         this.flagShader = new CGFshader(this.gl, "shaders/flag.vert", "shaders/flag.frag");
-
+        this.flagShader.setUniformsValues({ timeFactor: 0 });
         
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -149,21 +161,24 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        var tim;
+        var delta_tim;
         if(this.time == 0){
-            tim = 0;
+            delta_tim = 0;
             this.time = t;
         }
         else{
-            tim = t - this.time;
+            delta_tim = t - this.time;
             this.time = t;
         }
         //console.log(tim);
         this.checkKeys();
         this.vehicle.update(this.vehicleSpeed, this.vehicleScale);
         for(var i = 0; i < this.max_num_supplies; i++){
-            this.supplies[i].update(tim);
+            this.supplies[i].update(delta_tim);
         }
+
+        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        //console.log(t / 100 % 1000);
     }
 
     updateAppliedTexture() {
@@ -194,18 +209,19 @@ class MyScene extends CGFscene {
 
         //-------- Display vehicle
         if (this.displayVehicle){
-            this.pushMatrix();
-            this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
-            this.scale(this.vehicle.scale, this.vehicle.scale, this.vehicle.scale);
-            this.translate(-this.vehicle.x, -this.vehicle.y, -this.vehicle.z);
-            this.pushMatrix();
-            this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
-            this.rotate(this.vehicle.angle, 0, 1, 0);
-            this.translate(0, 10, 0);
+            
             this.vehicleTex.apply();
             this.vehicle.display();
-            this.popMatrix();
-            this.popMatrix();
+            
+
+
+            this.setActiveShader(this.flagShader);
+            this.flagTex.apply();
+            this.flag.display();
+            this.setActiveShader(this.defaultShader);
+
+
+
         }
 
         //------- Display cylinder
