@@ -166,7 +166,7 @@ class MySupply extends CGFobject {
     }
 
     update(time){
-        console.log(this.maxy);
+        //console.log(this.maxy);
         if(this.state == SupplyStates.FALLING){
             if(this.y > 0.5){
                 this.y -= (this.maxy - 0.5) * time / 3000.0;

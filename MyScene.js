@@ -78,6 +78,16 @@ class MyScene extends CGFscene {
         this.cubemap.setTexture(this.texture1);
         this.cubemap.setTextureWrap('REPEAT', 'REPEAT');
 
+        //------ Flag Texture Material
+        this.flagTex = new CGFappearance(this);
+        this.flagTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.flagTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.flagTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.flagTex.setShininess(10.0);
+        this.flagTex.loadTexture('images/temp.png');
+        this.flagTex.setTextureWrap('REPEAT', 'REPEAT');
+
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.Sphere = new MySphere(this, 16, 8);
@@ -85,6 +95,8 @@ class MyScene extends CGFscene {
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
         this.terrain = new MyTerrain(this, 20);
+
+        this.flag = new MyTerrain(this, 20);
 
 
         this.supplies = [];
@@ -103,11 +115,23 @@ class MyScene extends CGFscene {
 		this.appearance.loadTexture('images/terrain.jpg');
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
+        
+        this.flagAppearance = new CGFappearance(this);
+		this.flagAppearance.setAmbient(0.2, 0.4, 0.8, 1);
+		this.flagAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
+		this.flagAppearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.flagAppearance.setShininess(120);
+
+		
+		this.flagAppearance.loadTexture('images/temp.png');
+		this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
 
         //Shader stuff
 		this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.terrainShader.setUniformsValues({uSampler2: 1});
 
+        this.flagShader = new CGFshader(this.gl, "shaders/flag.vert", "shaders/flag.frag");
+        this.flagShader.setUniformsValues({ timeFactor: 0 });
         
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -137,11 +161,24 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
+        var delta_tim;
+        if(this.time == 0){
+            delta_tim = 0;
+            this.time = t;
+        }
+        else{
+            delta_tim = t - this.time;
+            this.time = t;
+        }
+        //console.log(tim);
         this.checkKeys();
         this.vehicle.update(this.vehicleSpeed, this.vehicleScale);
         for(var i = 0; i < this.max_num_supplies; i++){
-            this.supplies[i].update(t);
+            this.supplies[i].update(delta_tim);
         }
+
+        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        //console.log(t / 100 % 1000);
     }
 
     updateAppliedTexture() {
@@ -172,8 +209,14 @@ class MyScene extends CGFscene {
 
         //-------- Display vehicle
         if (this.displayVehicle){
+            
             this.vehicleTex.apply();
             this.vehicle.display();
+
+            this.setActiveShader(this.flagShader);
+            this.flagTex.apply();
+            this.flag.display();
+            this.setActiveShader(this.defaultShader);
         }
 
         //------- Display cylinder
