@@ -94,9 +94,9 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 16, 8);
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
-        this.terrain = new MyTerrain(this, 20);
+        this.terrain = new MyPlane(this, 20);
 
-        this.flag = new MyTerrain(this, 20);
+        this.flag = new MyPlane(this, 20);
 
 
         this.supplies = [];
