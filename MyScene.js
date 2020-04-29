@@ -9,7 +9,7 @@ class MyScene extends CGFscene {
     }
     init(application) {
 
-        this.time = 0.0;
+
        
         //this.appearance = null;
         super.init(application);
@@ -103,22 +103,10 @@ class MyScene extends CGFscene {
 		this.appearance.loadTexture('images/terrain.jpg');
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
-        
-        this.flagAppearance = new CGFappearance(this);
-		this.flagAppearance.setAmbient(0.2, 0.4, 0.8, 1);
-		this.flagAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
-		this.flagAppearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.flagAppearance.setShininess(120);
-
-		
-		this.flagAppearance.loadTexture('images/terrain.jpg');
-		this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
 
         //Shader stuff
 		this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.terrainShader.setUniformsValues({uSampler2: 1});
-
-        this.flagShader = new CGFshader(this.gl, "shaders/flag.vert", "shaders/flag.frag");
 
         
         //Objects connected to MyInterface
@@ -149,20 +137,10 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        var tim;
-        if(this.time == 0){
-            tim = 0;
-            this.time = t;
-        }
-        else{
-            tim = t - this.time;
-            this.time = t;
-        }
-        //console.log(tim);
         this.checkKeys();
         this.vehicle.update(this.vehicleSpeed, this.vehicleScale);
         for(var i = 0; i < this.max_num_supplies; i++){
-            this.supplies[i].update(tim);
+            this.supplies[i].update(t);
         }
     }
 
@@ -194,18 +172,8 @@ class MyScene extends CGFscene {
 
         //-------- Display vehicle
         if (this.displayVehicle){
-            this.pushMatrix();
-            this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
-            this.scale(this.vehicle.scale, this.vehicle.scale, this.vehicle.scale);
-            this.translate(-this.vehicle.x, -this.vehicle.y, -this.vehicle.z);
-            this.pushMatrix();
-            this.translate(this.vehicle.x, this.vehicle.y, this.vehicle.z);
-            this.rotate(this.vehicle.angle, 0, 1, 0);
-            this.translate(0, 10, 0);
             this.vehicleTex.apply();
             this.vehicle.display();
-            this.popMatrix();
-            this.popMatrix();
         }
 
         //------- Display cylinder

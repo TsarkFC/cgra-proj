@@ -21,7 +21,7 @@ class MyVehicle extends CGFobject {
         this.initBuffers();
     }
 
-    display(){
+    displayObject(){
         //---Big elipsoide
         this.scene.pushMatrix();
         this.scene.scale(1, 1, 2);
@@ -66,22 +66,18 @@ class MyVehicle extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(0.2, -1.145, -0.68);
-        this.scene.pushMatrix();
         this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
         this.scene.translate(0, 0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
         this.scene.popMatrix();
-        this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(0.2, -1.145, -0.68);
-        this.scene.pushMatrix();
         this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
         this.scene.translate(0, -0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
-        this.scene.popMatrix();
         this.scene.popMatrix();
 
         //2
@@ -99,22 +95,18 @@ class MyVehicle extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(-0.2, -1.145, -0.68);
-        this.scene.pushMatrix();
         this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
         this.scene.translate(0, 0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
         this.scene.popMatrix();
-        this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(-0.2, -1.145, -0.68);
-        this.scene.pushMatrix();
         this.scene.rotate(this.engineAng, Math.sin(this.angle), 0, Math.cos(this.angle));
         this.scene.translate(0, -0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
-        this.scene.popMatrix();
         this.scene.popMatrix();
         
         //---
@@ -155,6 +147,17 @@ class MyVehicle extends CGFobject {
         this.rudder.display();
         this.scene.popMatrix();
         //---
+
+    }
+
+    display(){
+        this.scene.pushMatrix();
+        this.scene.translate(this.x, this.y, this.z);
+        this.scene.rotate(this.angle, 0, 1, 0);
+        this.scene.translate(0, 10, 0);
+        this.scene.scale(this.scale, this.scale, this.scale);
+        this.displayObject();
+        this.scene.popMatrix();
     }
     
     updateBuffers(complexity){
