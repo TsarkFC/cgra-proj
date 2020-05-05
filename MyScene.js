@@ -55,14 +55,7 @@ class MyScene extends CGFscene {
         this.earth.loadTexture('images/earth.jpg');
         this.earth.setTextureWrap('REPEAT', 'REPEAT');
 
-        //------ Vehicle texture
-        this.vehicleTex = new CGFappearance(this);
-        this.vehicleTex.setAmbient(0.1, 0.1, 0.1, 1);
-        this.vehicleTex.setDiffuse(0.9, 0.9, 0.9, 1);
-        this.vehicleTex.setSpecular(0.1, 0.1, 0.1, 1);
-        this.vehicleTex.setShininess(10.0);
-        this.vehicleTex.loadTexture('images/vehicle.jpg');
-        this.vehicleTex.setTextureWrap('REPEAT', 'REPEAT');
+        
 
         //------ Cubemap Texture Material
         this.cubemap = new CGFappearance(this);
@@ -90,9 +83,6 @@ class MyScene extends CGFscene {
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
         this.terrain = new MyPlane(this, 20);
-
-        this.flag = new MyPlane(this, 20);
-
 
         this.supplies = [];
         for(var i = 0; i < this.max_num_supplies; i++){
@@ -174,7 +164,6 @@ class MyScene extends CGFscene {
         }
 
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
-        //console.log(t / 100 % 1000);
     }
 
     updateAppliedTexture() {
@@ -197,23 +186,21 @@ class MyScene extends CGFscene {
 
         this.cubemap.apply();
         this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+
+        //-------- Display Scenario
+        this.pushMatrix();
+		this.scale(50, 50, 50);
+		this.rotate(Math.PI/2, 1, 0, 0);
         this.scenario.display();
+        this.popMatrix();
     
         //-------- Draw axis
         if (this.displayAxis)
             this.axis.display();
 
         //-------- Display vehicle
-        if (this.displayVehicle){
-            
-            this.vehicleTex.apply();
+        if (this.displayVehicle)
             this.vehicle.display();
-
-            this.setActiveShader(this.flagShader);
-            this.flagTex.apply();
-            this.flag.display();
-            this.setActiveShader(this.defaultShader);
-        }
 
         //------- Display cylinder
         if(this.showcylinderonly){

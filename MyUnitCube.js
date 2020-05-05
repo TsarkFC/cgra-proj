@@ -147,12 +147,4 @@ class MyUnitCube extends CGFobject {
         this.initBuffers(50, 50, 50);
         this.initNormalVizBuffers();
 	}
-	
-	display(){
-        this.scene.pushMatrix();
-		this.scene.scale(50, 50, 50);
-		this.scene.rotate(Math.PI/2, 1, 0, 0);
-        super.display();
-        this.scene.popMatrix();
-	}
 }

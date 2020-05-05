@@ -7,7 +7,7 @@ class MyVehicle extends CGFobject {
         super(scene);
         this.slices = slices;
         this.stacks = stacks;
-        this.angle = 0; this.rudderAng = 0; this.engineAng = 0;
+        this.angle = 0;
         this.v = 0;
         this.x = 0;
         this.y = 0;
@@ -17,13 +17,29 @@ class MyVehicle extends CGFobject {
         this.autopilot = false;
         this.time = 0;
 
+        this.intiObjects();
+        this.initMaterials();
+        this.initBuffers();
+    }
+
+    intiObjects(){
         this.sphere = new MySphere(this.scene, this.slices, this.stacks);
         this.cylinder = new MyCylinder(this.scene, this.slices, this.stacks);
         this.rudders = new MyVehicleRudders(this.scene);
         this.engine = new MyEngine(this.scene, this.slices, this.stacks);
         this.gondola = new MyGondola(this.scene, this.slices, this.stacks);
+        this.flag = new MyFlag(this.scene);
+    }
 
-        this.initBuffers();
+    initMaterials(){
+        //------ Vehicle texture
+        this.vehicleTex = new CGFappearance(this.scene);
+        this.vehicleTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.vehicleTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.vehicleTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.vehicleTex.setShininess(10.0);
+        this.vehicleTex.loadTexture('images/vehicle.jpg');
+        this.vehicleTex.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     displayObject(){
@@ -44,7 +60,6 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         
         this.rudders.display();
-
     }
 
     display(){
@@ -53,6 +68,8 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(this.angle, 0, 1, 0);
         this.scene.translate(0, 10, 0);
         this.scene.scale(this.scale, this.scale, this.scale);
+        this.flag.display();
+        this.vehicleTex.apply();
         this.displayObject();
         this.scene.popMatrix();
     }
@@ -83,11 +100,7 @@ class MyVehicle extends CGFobject {
         else{
             this.x = this.center[0] - this.replace[0]*5;
             this.z = this.center[2] - this.replace[2]*5;
-
-            if (this.angle>=0)
-                this.angle += ((t - this.time)/1000)*2*Math.PI/5;
-            else
-                this.angle -= ((t - this.time)/1000)*2*Math.PI/5;
+            this.angle += ((t - this.time)/1000)*2*Math.PI/5;
 
             this.updatePerpendiculars();
             this.time = t;
@@ -124,12 +137,7 @@ class MyVehicle extends CGFobject {
     }
 
     updatePerpendiculars(){
-        if (this.angle>=0){
-            this.perpendicular = this.angle + Math.PI/2;
-        }
-        else{
-            this.perpendicular = this.angle - Math.PI/2;
-        }
+        this.perpendicular = this.angle + Math.PI/2;
         this.replace = [Math.sin(this.perpendicular), 0, Math.cos(this.perpendicular)];
     }
 }
