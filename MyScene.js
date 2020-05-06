@@ -75,6 +75,8 @@ class MyScene extends CGFscene {
         this.flagTex.loadTexture('images/temp.png');
         this.flagTex.setTextureWrap('REPEAT', 'REPEAT');
 
+        //------ BillBoard
+
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
@@ -83,6 +85,8 @@ class MyScene extends CGFscene {
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
         this.terrain = new MyPlane(this, 20);
+
+        this.billBoard = new MyBillboard(this, 20);
 
         this.supplies = [];
         for(var i = 0; i < this.max_num_supplies; i++){
@@ -109,7 +113,19 @@ class MyScene extends CGFscene {
 
 		
 		this.flagAppearance.loadTexture('images/temp.png');
-		this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        
+
+        //Billboard appearance
+        this.billboardAppearance = new CGFappearance(this);
+		this.billboardAppearance.setAmbient(0.2, 0.4, 0.8, 1);
+		this.billboardAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
+		this.billboardAppearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.billboardAppearance.setShininess(120);
+
+		
+		this.billboardAppearance.loadTexture('images/gray.png');
+		this.billboardAppearance.setTextureWrap('REPEAT', 'REPEAT');
 
         //Shader stuff
 		this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
@@ -117,6 +133,9 @@ class MyScene extends CGFscene {
 
         this.flagShader = new CGFshader(this.gl, "shaders/flag.vert", "shaders/flag.frag");
         this.flagShader.setUniformsValues({ timeFactor: 0 });
+        
+        this.billboardShader = new CGFshader(this.gl, "shaders/bar.vert", "shaders/bar.frag");
+        this.billboardShader.setUniformsValues({ percentageDelivered: 0.0});
         
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -164,6 +183,9 @@ class MyScene extends CGFscene {
         }
 
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+
+        console.log(this.billBoard.percentageDelivered);
+        this.billboardShader.setUniformsValues({ percentageDelivered: this.billBoard.percentageDelivered});
     }
 
     updateAppliedTexture() {
@@ -236,6 +258,9 @@ class MyScene extends CGFscene {
             this.supplies[i].display();
             this.popMatrix();
         }
+
+        this.billBoard.display();
+
         // ---- END Primitive drawing section
     }
 
@@ -265,6 +290,11 @@ class MyScene extends CGFscene {
         }
         if (this.gui.isKeyPressed("KeyR")) {
             this.vehicle.reset();
+            this.billBoard.reset();
+            for(var i = 0; i < this.max_num_supplies; i++){
+                this.supplies[i].reset();
+            }
+
             text+=" R ";
             keysPressed=true;
         }
