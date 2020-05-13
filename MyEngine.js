@@ -29,7 +29,7 @@ class MyEngine extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(0.2, -1.145, -0.68);
-        this.scene.rotate(this.ang, Math.sin(angle), 0, Math.cos(angle));
+        this.scene.rotate(this.ang, 0, 0, 1);
         this.scene.translate(0, 0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();
@@ -37,7 +37,7 @@ class MyEngine extends CGFobject {
 
         this.scene.pushMatrix();
         this.scene.translate(0.2, -1.145, -0.68);
-        this.scene.rotate(this.ang, Math.sin(angle), 0, Math.cos(angle));
+        this.scene.rotate(this.ang, 0, 0, 1);
         this.scene.translate(0, -0.045, 0);
         this.scene.scale(0.04, 0.09, 0.01);
         this.sphere.display();

@@ -186,7 +186,7 @@ class MySupply extends CGFobject {
         this.maxy = y;
         this.y = y;
         this.z = z;
-        this.scene.billBoard.percentageDelivered += 0.2;
+        this.scene.billBoard.percentageDelivered += 1.0 / this.scene.max_num_supplies;
         //Fazer set das coordenadas
     }
 
