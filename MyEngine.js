@@ -14,7 +14,7 @@ class MyEngine extends CGFobject {
         this.ang += v * Math.PI/2 * speed;
     }
 
-	display(angle){
+	display(){
         this.scene.pushMatrix();
         this.scene.translate(0.2, -1.15, -0.5);
         this.scene.scale(0.1, 0.1, 0.2);

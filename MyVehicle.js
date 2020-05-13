@@ -52,11 +52,11 @@ class MyVehicle extends CGFobject {
 
         this.gondola.display();
 
-        this.engine.display(this.angle);
+        this.engine.display();
 
         this.scene.pushMatrix();
         this.scene.translate(-0.4, 0, 0);
-        this.engine.display(this.angle);
+        this.engine.display();
         this.scene.popMatrix();
         
         this.rudders.display();

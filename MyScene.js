@@ -133,6 +133,8 @@ class MyScene extends CGFscene {
 
         this.flagShader = new CGFshader(this.gl, "shaders/flag.vert", "shaders/flag.frag");
         this.flagShader.setUniformsValues({ timeFactor: 0 });
+        this.invflagShader = new CGFshader(this.gl, "shaders/invflag.vert", "shaders/flag.frag");
+        this.invflagShader.setUniformsValues({ timeFactor: 0 });
         
         this.billboardShader = new CGFshader(this.gl, "shaders/bar.vert", "shaders/bar.frag");
         this.billboardShader.setUniformsValues({ percentageDelivered: 0.0});
@@ -183,6 +185,7 @@ class MyScene extends CGFscene {
         }
 
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        this.invflagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
 
         console.log(this.billBoard.percentageDelivered);
         this.billboardShader.setUniformsValues({ percentageDelivered: this.billBoard.percentageDelivered});

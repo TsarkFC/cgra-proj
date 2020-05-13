@@ -27,24 +27,30 @@ class MyFlag extends CGFobject {
 	display(){
         this.scene.setActiveShader(this.scene.flagShader);
         this.scene.flagTex.apply();
+
         this.scene.pushMatrix();
         this.scene.translate(0, 0, -4);
         this.scene.scale(1, 1, 2);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.flag.display();
+        this.scene.popMatrix();
 
-        this.flag.display();
+        this.scene.setActiveShader(this.scene.invflagShader);
+        this.scene.flagTex.apply();
+
         this.scene.pushMatrix();
-        this.scene.scale(1, -1, 1);
+        this.scene.translate(0, 0, -4);
+        this.scene.scale(1, -1, 2);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.flag.display();
         this.scene.popMatrix();
-        this.scene.popMatrix();
+
         this.scene.setActiveShader(this.scene.defaultShader);
 
         this.scene.pushMatrix();
         this.scene.rotate(0.14, 1, 0, 0);
         this.scene.translate(0, 0, -2.5);
         this.scene.scale(0.1, 0.1, 1.5);
-        
         this.cubeTex.apply();
         this.cube.display();
         this.scene.popMatrix();
@@ -53,7 +59,6 @@ class MyFlag extends CGFobject {
         this.scene.rotate(-0.14, 1, 0, 0);
         this.scene.translate(0, 0, -2.5);
         this.scene.scale(0.1, 0.1, 1.5);
-        
         this.cubeTex.apply();
         this.cube.display();
         this.scene.popMatrix();
