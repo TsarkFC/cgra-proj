@@ -72,7 +72,7 @@ class MyScene extends CGFscene {
         this.flagTex.setDiffuse(0.9, 0.9, 0.9, 1);
         this.flagTex.setSpecular(0.1, 0.1, 0.1, 1);
         this.flagTex.setShininess(10.0);
-        this.flagTex.loadTexture('images/temp.png');
+        this.flagTex.loadTexture('images/Portugal_Flag.png');
         this.flagTex.setTextureWrap('REPEAT', 'REPEAT');
 
         //------ BillBoard

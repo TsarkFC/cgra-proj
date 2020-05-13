@@ -9,6 +9,19 @@ class MyFlag extends CGFobject {
 		
         this.flag = new MyPlane(this.scene, 20);
         this.cube = new MyUnitCube(this.scene);
+
+        this.initMaterials();
+    }
+
+    initMaterials(){
+        //------ Vehicle texture
+        this.cubeTex = new CGFappearance(this.scene);
+        this.cubeTex.setAmbient(0.1, 0.1, 0.1, 1);
+        this.cubeTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.cubeTex.setSpecular(0.1, 0.1, 0.1, 1);
+        this.cubeTex.setShininess(10.0);
+        this.cubeTex.loadTexture('images/gray.png');
+        this.cubeTex.setTextureWrap('REPEAT', 'REPEAT');
     }
     
 	display(){
@@ -31,6 +44,8 @@ class MyFlag extends CGFobject {
         this.scene.rotate(0.14, 1, 0, 0);
         this.scene.translate(0, 0, -2.5);
         this.scene.scale(0.1, 0.1, 1.5);
+        
+        this.cubeTex.apply();
         this.cube.display();
         this.scene.popMatrix();
 
@@ -38,6 +53,8 @@ class MyFlag extends CGFobject {
         this.scene.rotate(-0.14, 1, 0, 0);
         this.scene.translate(0, 0, -2.5);
         this.scene.scale(0.1, 0.1, 1.5);
+        
+        this.cubeTex.apply();
         this.cube.display();
         this.scene.popMatrix();
     }

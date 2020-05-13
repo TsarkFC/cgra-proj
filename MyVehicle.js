@@ -34,8 +34,8 @@ class MyVehicle extends CGFobject {
     initMaterials(){
         //------ Vehicle texture
         this.vehicleTex = new CGFappearance(this.scene);
-        this.vehicleTex.setAmbient(0.1, 0.1, 0.1, 1);
-        this.vehicleTex.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.vehicleTex.setAmbient(1, 1, 1, 1);
+        this.vehicleTex.setDiffuse(0.8, 0.8, 0.8, 1);
         this.vehicleTex.setSpecular(0.1, 0.1, 0.1, 1);
         this.vehicleTex.setShininess(10.0);
         this.vehicleTex.loadTexture('images/vehicle.jpg');
