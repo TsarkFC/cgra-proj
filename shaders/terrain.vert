@@ -21,14 +21,10 @@ void main() {
 	vec3 offset=vec3(0.0,0.0,1.0);
 	
 	vTextureCoord = aTextureCoord;
-
-	
 	
 	vec4 filterer = texture2D(uSampler2, mod(vTextureCoord, 1.0));
 
-	
 	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + offset * filterer.b , 1.0);
-	//gl_Position.y += filterer.y * 8.0;
 }
 
 
