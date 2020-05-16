@@ -101,6 +101,7 @@ class MyVehicle extends CGFobject {
             this.x = this.center[0] - this.replace[0]*5;
             this.z = this.center[2] - this.replace[2]*5;
             this.angle += ((t - this.time)/1000)*2*Math.PI/5;
+            this.engine.update(0.2, 1);
 
             this.updatePerpendiculars();
             this.time = t;

@@ -8,10 +8,18 @@ class MyVehicleRudders extends CGFobject {
         super(scene);
         this.ang = 0;
         this.rudder = new MyRudder(this.scene);
+        this.initMaterials();
     }
 
-    initMaterials(scene) {
-        
+    initMaterials() {
+        //------ Vehicle texture
+        this.texture = new CGFappearance(this.scene);
+        this.texture.setAmbient(1, 1, 1, 1);
+        this.texture.setDiffuse(0.8, 0.8, 0.8, 1);
+        this.texture.setSpecular(0.1, 0.1, 0.1, 1);
+        this.texture.setShininess(10.0);
+        this.texture.loadTexture('images/red.jpg');
+        this.texture.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     update(val){
@@ -23,6 +31,7 @@ class MyVehicleRudders extends CGFobject {
     }
     
 	display(){
+        this.texture.apply();
         this.scene.pushMatrix();
         this.scene.translate(0.7, 0, -1.3);
         this.scene.scale(0.35, 1, 0.4);

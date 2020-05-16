@@ -9,10 +9,6 @@ class MyGondola extends CGFobject {
         this.sphere = new MySphere(this.scene, slices, stacks);
         this.cylinder = new MyCylinder(this.scene, slices, stacks);
     }
-
-    initMaterials(scene) {
-        
-    }
     
 	display(){
         this.scene.pushMatrix();
