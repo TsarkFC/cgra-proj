@@ -22,7 +22,7 @@ class MyEngine extends CGFobject {
         this.texture.setDiffuse(0.8, 0.8, 0.8, 1);
         this.texture.setSpecular(0.1, 0.1, 0.1, 1);
         this.texture.setShininess(10.0);
-        this.texture.loadTexture('images/vehicle.jpg');
+        this.texture.loadTexture('images/green.jpg');
         this.texture.setTextureWrap('REPEAT', 'REPEAT');
 
         //------ Vehicle texture
