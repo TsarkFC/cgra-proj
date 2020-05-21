@@ -187,7 +187,7 @@ class MyScene extends CGFscene {
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
         this.invflagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
 
-        console.log(this.billBoard.percentageDelivered);
+        //console.log(this.billBoard.percentageDelivered);
         this.billboardShader.setUniformsValues({ percentageDelivered: this.billBoard.percentageDelivered});
     }
 
@@ -210,8 +210,7 @@ class MyScene extends CGFscene {
         this.cylinder.enableNormalViz();
 
         this.cubemap.apply();
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-
+        
         //-------- Display Scenario
         this.pushMatrix();
 		this.scale(50, 50, 50);
