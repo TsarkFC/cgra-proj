@@ -308,6 +308,14 @@ class MyScene extends CGFscene {
                 keysPressed = true;
             }
         }
+        else{
+            if (this.gui.isKeyPressed("KeyP")){
+                this.vehicle.resetAutoPilot();
+    
+                text+=" P ";
+                keysPressed = true;
+            }
+        }
         
         if (this.gui.isKeyPressed("KeyR")) {
             this.vehicle.reset();

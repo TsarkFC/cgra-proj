@@ -139,6 +139,12 @@ class MyVehicle extends CGFobject {
         this.center = [this.x + this.replace[0]*5, this.y, this.z + this.replace[2]*5];
     }
 
+    resetAutoPilot(){
+        this.v = Math.PI / 10;
+        this.time = 0;
+        this.autopilot = false;
+    }
+
     updatePerpendiculars(){
         this.perpendicular = this.angle + Math.PI/2;
         this.replace = [Math.sin(this.perpendicular), 0, Math.cos(this.perpendicular)];
