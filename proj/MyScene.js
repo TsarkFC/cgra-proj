@@ -24,6 +24,23 @@ class MyScene extends CGFscene {
         
         this.enableTextures(true);
 
+        this.initTextures();
+        this.initMaterials();
+        this.initObjects();
+
+        //Vehicle stuff
+        this.vehicleSpeed = 1.0;
+        this.vehicleScale = 1.0;
+
+        this.initShaders();
+        
+        //Objects connected to MyInterface
+        this.displayAxis = true;
+        this.displayVehicle = true;
+        this.showcylinderonly = false;
+        this.showsphereonly = false;
+    }
+    initTextures(){
         //------ Texture stuff
         this.texture1 = new CGFtexture(this, 'images/Grass_cubemap.png');
         this.texture2 = new CGFtexture(this, 'images/Forest_cubemap.png');
@@ -35,7 +52,8 @@ class MyScene extends CGFscene {
         this.textures = [this.texture1, this.texture2, this.texture3, this.texture4];
         this.textureIds = { 'Grass': 0, 'Forest': 1, 'Sea': 2, 'Water': 3};
         //------
-        
+    }
+    initMaterials(){
         //------ Cylinder material
         this.testMaterial = new CGFappearance(this); 
         this.testMaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -45,7 +63,6 @@ class MyScene extends CGFscene {
         this.testMaterial.loadTexture('images/temp.png');
         this.testMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
-
         //------ Earth Texture Material
         this.earth = new CGFappearance(this);
         this.earth.setAmbient(0.1, 0.1, 0.1, 1);
@@ -54,8 +71,6 @@ class MyScene extends CGFscene {
         this.earth.setShininess(10.0);
         this.earth.loadTexture('images/earth.jpg');
         this.earth.setTextureWrap('REPEAT', 'REPEAT');
-
-        
 
         //------ Cubemap Texture Material
         this.cubemap = new CGFappearance(this);
@@ -75,9 +90,33 @@ class MyScene extends CGFscene {
         this.flagTex.loadTexture('images/Portugal_Flag.png');
         this.flagTex.setTextureWrap('REPEAT', 'REPEAT');
 
-        //------ BillBoard
+        // Materials and textures initialization
+		this.appearance = new CGFappearance(this);
+		this.appearance.setAmbient(0.2, 0.4, 0.8, 1);
+		this.appearance.setDiffuse(0.2, 0.7, 0.7, 1);
+		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.appearance.setShininess(120);
+		this.appearance.loadTexture('images/terrain.jpg');
+		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
-
+        this.flagAppearance = new CGFappearance(this);
+		this.flagAppearance.setAmbient(0.2, 0.4, 0.8, 1);
+		this.flagAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
+		this.flagAppearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.flagAppearance.setShininess(120);
+		this.flagAppearance.loadTexture('images/temp.png');
+        this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        
+        //Billboard appearance
+        this.billboardAppearance = new CGFappearance(this);
+		this.billboardAppearance.setAmbient(0.2, 0.4, 0.8, 1);
+		this.billboardAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
+		this.billboardAppearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.billboardAppearance.setShininess(120);
+		this.billboardAppearance.loadTexture('images/gray.png');
+		this.billboardAppearance.setTextureWrap('REPEAT', 'REPEAT');
+    }
+    initObjects(){
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.Sphere = new MySphere(this, 16, 8);
@@ -91,45 +130,8 @@ class MyScene extends CGFscene {
         for(var i = 0; i < this.max_num_supplies; i++){
             this.supplies.push(new MySupply(this, 1.0));
         }
-
-        // Materials and textures initialization
-		this.appearance = new CGFappearance(this);
-		this.appearance.setAmbient(0.2, 0.4, 0.8, 1);
-		this.appearance.setDiffuse(0.2, 0.7, 0.7, 1);
-		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.appearance.setShininess(120);
-
-		
-		this.appearance.loadTexture('images/terrain.jpg');
-		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-
-        
-        this.flagAppearance = new CGFappearance(this);
-		this.flagAppearance.setAmbient(0.2, 0.4, 0.8, 1);
-		this.flagAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
-		this.flagAppearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.flagAppearance.setShininess(120);
-
-		
-		this.flagAppearance.loadTexture('images/temp.png');
-        this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
-        
-
-        //Billboard appearance
-        this.billboardAppearance = new CGFappearance(this);
-		this.billboardAppearance.setAmbient(0.2, 0.4, 0.8, 1);
-		this.billboardAppearance.setDiffuse(0.2, 0.7, 0.7, 1);
-		this.billboardAppearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.billboardAppearance.setShininess(120);
-
-		
-		this.billboardAppearance.loadTexture('images/gray.png');
-		this.billboardAppearance.setTextureWrap('REPEAT', 'REPEAT');
-
-        //Vehicle stuff
-        this.vehicleSpeed = 1.0;
-        this.vehicleScale = 1.0;
-
+    }
+    initShaders(){
         //Shader stuff
 		this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.terrainShader.setUniformsValues({uSampler2: 1});
@@ -146,12 +148,7 @@ class MyScene extends CGFscene {
         
         this.billboardShader = new CGFshader(this.gl, "shaders/bar.vert", "shaders/bar.frag");
         this.billboardShader.setUniformsValues({ percentageDelivered: 0.0});
-        
-        //Objects connected to MyInterface
-        this.displayAxis = true;
-        this.displayVehicle = true;
-        this.showcylinderonly = false;
-        this.showsphereonly = false;
+
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -229,10 +226,6 @@ class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
-        //-------- Display vehicle
-        if (this.displayVehicle)
-            this.vehicle.display();
-
         //------- Display cylinder
         if(this.showcylinderonly){
             this.testMaterial.apply();
@@ -244,31 +237,38 @@ class MyScene extends CGFscene {
             this.earth.apply();
             this.Sphere.display();
         }
-        // aplly main appearance (including texture in default texture unit 0)
-        this.appearance.apply();
 
-        //------- Display terrain
-        // bind additional texture to texture unit 1
-        this.heightTex.bind(1);
-        this.setActiveShader(this.terrainShader);
-        this.pushMatrix();
-        this.translate(0, -2.15, 0);
-        this.scale(50, 8, 50);
-        this.rotate(-Math.PI / 2, 1, 0, 0);
-        this.terrain.display();
-        this.popMatrix();
-        // restore default shader (will be needed for drawing the axis in next frame)
-		this.setActiveShader(this.defaultShader);
+        
+        //-------- Display vehicle
+        if (this.displayVehicle){
+            this.vehicle.display();
 
-        this.setDefaultAppearance();
+            // aplly main appearance (including texture in default texture unit 0)
+            this.appearance.apply();
 
-        for(var i = 0; i < this.max_num_supplies; i++){
+            //------- Display terrain
+            // bind additional texture to texture unit 1
+            this.heightTex.bind(1);
+            this.setActiveShader(this.terrainShader);
             this.pushMatrix();
-            this.supplies[i].display();
+            this.translate(0, -2.15, 0);
+            this.scale(50, 8, 50);
+            this.rotate(-Math.PI / 2, 1, 0, 0);
+            this.terrain.display();
             this.popMatrix();
-        }
+            // restore default shader (will be needed for drawing the axis in next frame)
+            this.setActiveShader(this.defaultShader);
 
-        this.billBoard.display();
+            this.setDefaultAppearance();
+
+            for(var i = 0; i < this.max_num_supplies; i++){
+                this.pushMatrix();
+                this.supplies[i].display();
+                this.popMatrix();
+            }
+
+            this.billBoard.display();
+        }
 
         // ---- END Primitive drawing section
     }

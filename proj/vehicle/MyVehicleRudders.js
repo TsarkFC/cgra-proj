@@ -23,7 +23,7 @@ class MyVehicleRudders extends CGFobject {
     }
 
     update(val){
-        this.ang = val>0 ? 0.2 : -0.2;
+        this.ang = val>0 ? -0.2 : 0.2;
     }
 
     resetturn(){
