@@ -68,8 +68,9 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(this.angle, 0, 1, 0);
         this.scene.translate(0, 10, 0);
         this.scene.scale(this.scale, this.scale, this.scale);
-        this.flag.display();
+        this.flag.displayResized();
         this.vehicleTex.apply();
+        this.scene.scale(0.5, 0.5, 0.5);
         this.displayObject();
         this.scene.popMatrix();
     }

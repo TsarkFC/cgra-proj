@@ -63,4 +63,10 @@ class MyFlag extends CGFobject {
         this.cube.display();
         this.scene.popMatrix();
     }
+    displayResized(){
+        this.scene.pushMatrix();
+        this.scene.scale(0.5, 0.5, 0.5);
+        this.display();
+        this.scene.popMatrix();
+    }
 }

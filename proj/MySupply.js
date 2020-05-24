@@ -50,35 +50,41 @@ class MySupply extends CGFobject {
             //else this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0,0,0.5);
             this.square.display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0,0,-0.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
             this.square.display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0.5,0,0);
             this.scene.rotate(Math.PI / 2, 0, 1, 0);
             this.square.display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(-0.5,0,0);
             this.scene.rotate(3*Math.PI / 2, 0, 1, 0);
             this.square.display();
             this.scene.popMatrix();
             
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0,-0.5,0);
             this.scene.rotate(Math.PI/2, 1, 0, 0);
             this.square.display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0,0.5,0);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
             this.square.display();
@@ -91,12 +97,14 @@ class MySupply extends CGFobject {
             if (this.scene.linearInt) this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
             
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(this.x,-0.5 + this.y,0 + this.z);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
             this.square.display();
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(this.x, -0.5 + this.y, 1 + this.z);
             this.scene.rotate(Math.PI/3, 0, 1, 0);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -104,6 +112,7 @@ class MySupply extends CGFobject {
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(-1 + this.x, -0.5 + this.y, 0 + this.z);
             this.scene.rotate(Math.PI/5, 0, 1, 0);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -111,6 +120,7 @@ class MySupply extends CGFobject {
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0.5 + this.x,-0.5 + this.y, 1 + this.z);
             this.scene.rotate(Math.PI/10, 0, 1, 0);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -118,6 +128,7 @@ class MySupply extends CGFobject {
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(this.x, -0.5 + this.y, -1 + this.z);
             this.scene.rotate(Math.PI/7, 0, 1, 0);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -125,6 +136,7 @@ class MySupply extends CGFobject {
             this.scene.popMatrix();
 
             this.scene.pushMatrix();
+            this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0.5 + this.x, -0.5 + this.y, -1.5 + this.z);
             this.scene.rotate(Math.PI/5, 0, 1, 0);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);

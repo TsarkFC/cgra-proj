@@ -25,15 +25,15 @@ class MyScene extends CGFscene {
         this.enableTextures(true);
 
         //------ Texture stuff
-        this.texture1 = new CGFtexture(this, 'images/Water_cubemap.png');
+        this.texture1 = new CGFtexture(this, 'images/Grass_cubemap.png');
         this.texture2 = new CGFtexture(this, 'images/Forest_cubemap.png');
         this.texture3 = new CGFtexture(this, 'images/Sea_cubemap.png');
-        this.texture4 = new CGFtexture(this, 'images/Grass_cubemap.png');
+        this.texture4 = new CGFtexture(this, 'images/Water_cubemap.png');
         this.heightTex = new CGFtexture(this, 'images/heightmap.jpg');
 
         this.cubemapTex = 0;
         this.textures = [this.texture1, this.texture2, this.texture3, this.texture4];
-        this.textureIds = { 'Water': 0, 'Forest': 1, 'Sea': 2, 'Grass': 3};
+        this.textureIds = { 'Grass': 0, 'Forest': 1, 'Sea': 2, 'Water': 3};
         //------
         
         //------ Cylinder material
