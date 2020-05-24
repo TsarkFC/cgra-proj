@@ -85,7 +85,6 @@ class MyScene extends CGFscene {
         this.scenario = new MyUnitCube(this);
         this.vehicle = new MyVehicle(this, 16, 8);
         this.terrain = new MyPlane(this, 20);
-
         this.billBoard = new MyBillboard(this, 20);
 
         this.supplies = [];
@@ -127,14 +126,23 @@ class MyScene extends CGFscene {
 		this.billboardAppearance.loadTexture('images/gray.png');
 		this.billboardAppearance.setTextureWrap('REPEAT', 'REPEAT');
 
+        //Vehicle stuff
+        this.vehicleSpeed = 1.0;
+        this.vehicleScale = 1.0;
+
         //Shader stuff
 		this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.terrainShader.setUniformsValues({uSampler2: 1});
 
         this.flagShader = new CGFshader(this.gl, "shaders/flag.vert", "shaders/flag.frag");
         this.flagShader.setUniformsValues({ timeFactor: 0 });
+        this.flagShader.setUniformsValues({ v: Math.abs(this.vehicle.v) });
+        this.flagShader.setUniformsValues({ speed: this.vehicleSpeed });
         this.invflagShader = new CGFshader(this.gl, "shaders/invflag.vert", "shaders/flag.frag");
         this.invflagShader.setUniformsValues({ timeFactor: 0 });
+        this.invflagShader.setUniformsValues({ v: Math.abs(this.vehicle.v) });
+        this.invflagShader.setUniformsValues({ speed: this.vehicleSpeed });
+
         
         this.billboardShader = new CGFshader(this.gl, "shaders/bar.vert", "shaders/bar.frag");
         this.billboardShader.setUniformsValues({ percentageDelivered: 0.0});
@@ -144,11 +152,6 @@ class MyScene extends CGFscene {
         this.displayVehicle = true;
         this.showcylinderonly = false;
         this.showsphereonly = false;
-
-
-        //Vehicle stuff
-        this.vehicleSpeed = 1.0;
-        this.vehicleScale = 1.0;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -185,7 +188,11 @@ class MyScene extends CGFscene {
         }
 
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        this.flagShader.setUniformsValues({ v: Math.abs(this.vehicle.v) });
+        this.flagShader.setUniformsValues({ speed: this.vehicleSpeed });
         this.invflagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        this.invflagShader.setUniformsValues({ v: Math.abs(this.vehicle.v) });
+        this.invflagShader.setUniformsValues({ speed: this.vehicleSpeed });
 
         //console.log(this.billBoard.percentageDelivered);
         this.billboardShader.setUniformsValues({ percentageDelivered: this.billBoard.percentageDelivered});
@@ -272,12 +279,12 @@ class MyScene extends CGFscene {
         // Check for key codes e.g. in https://keycode.info/
         if (!this.vehicle.autopilot){
             if (this.gui.isKeyPressed("KeyW")) {
-                this.vehicle.accerlerate(0.1);
+                this.vehicle.accerlerate(0.05);
                 text+=" W ";
                 keysPressed=true;
             }
             if (this.gui.isKeyPressed("KeyS")) {
-                this.vehicle.accerlerate(-0.1);
+                this.vehicle.accerlerate(-0.05);
                 text+=" S ";
                 keysPressed=true;
             }
