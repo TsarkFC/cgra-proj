@@ -106,6 +106,7 @@ class MyVehicle extends CGFobject {
             this.updatePerpendiculars();
             this.time = t;
         }
+        this.rudders.update(0.2);
     }
 
     turn(val){

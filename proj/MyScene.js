@@ -270,56 +270,58 @@ class MyScene extends CGFscene {
         var text="Keys pressed: ";
         var keysPressed=false;
         // Check for key codes e.g. in https://keycode.info/
-        if (this.gui.isKeyPressed("KeyW") && !this.vehicle.autopilot) {
-            this.vehicle.accerlerate(0.1);
-            text+=" W ";
-            keysPressed=true;
+        if (!this.vehicle.autopilot){
+            if (this.gui.isKeyPressed("KeyW")) {
+                this.vehicle.accerlerate(0.1);
+                text+=" W ";
+                keysPressed=true;
+            }
+            if (this.gui.isKeyPressed("KeyS")) {
+                this.vehicle.accerlerate(-0.1);
+                text+=" S ";
+                keysPressed=true;
+            }
+            if (this.gui.isKeyPressed("KeyA")) {
+                this.vehicle.turn(0.2);
+                text+=" A ";
+                keysPressed=true;
+            }
+            if (this.gui.isKeyPressed("KeyD")) {
+                this.vehicle.turn(-0.2);
+                text+=" D ";
+                keysPressed=true;
+            }
+            if(this.gui.isKeyPressed("KeyL")){
+                for(var i = 0; i < this.max_num_supplies; i++){
+                    if(this.supplies[i].state == SupplyStates.INACTIVE){
+                        this.supplies[i].drop(this.vehicle.x, this.vehicle.y + 10, this.vehicle.z);
+                        break;
+                    }
+                }
+                text+=" L ";
+                keysPressed = true;
+            }
+            if (this.gui.isKeyPressed("KeyP")){
+                this.vehicle.startAutoPilot();
+    
+                text+=" P ";
+                keysPressed = true;
+            }
         }
-        if (this.gui.isKeyPressed("KeyS") && !this.vehicle.autopilot) {
-            this.vehicle.accerlerate(-0.1);
-            text+=" S ";
-            keysPressed=true;
-        }
-        if (this.gui.isKeyPressed("KeyA") && !this.vehicle.autopilot) {
-            this.vehicle.turn(0.2);
-            text+=" A ";
-            keysPressed=true;
-        }
-        if (this.gui.isKeyPressed("KeyD") && !this.vehicle.autopilot) {
-            this.vehicle.turn(-0.2);
-            text+=" D ";
-            keysPressed=true;
-        }
+        
         if (this.gui.isKeyPressed("KeyR")) {
             this.vehicle.reset();
             this.billBoard.reset();
             for(var i = 0; i < this.max_num_supplies; i++){
                 this.supplies[i].reset();
             }
-
             text+=" R ";
             keysPressed=true;
         }
-        if(this.gui.isKeyPressed("KeyL")){
-            for(var i = 0; i < this.max_num_supplies; i++){
-                if(this.supplies[i].state == SupplyStates.INACTIVE){
-                    this.supplies[i].drop(this.vehicle.x, this.vehicle.y + 10, this.vehicle.z);
-                    break;
-                }
-            }
-            text+=" L ";
-            keysPressed = true;
-        }
-        if (this.gui.isKeyPressed("KeyP")){
-            this.vehicle.startAutoPilot();
-
-            text+=" P ";
-            keysPressed = true;
-        }
-
+        
         if (keysPressed)
             console.log(text);
-        else 
+        else if (!this.vehicle.autopilot)
             this.vehicle.resetturn();
     }
 }
